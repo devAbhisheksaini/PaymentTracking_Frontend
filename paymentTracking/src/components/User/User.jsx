@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
 import React from 'react';
-
+import axios from "axios";
 export function User({ users, addUser }) {
   const [openForm, setForm] = useState(false);
   const [newUser, setNewUser] = useState({
@@ -30,36 +30,46 @@ export function User({ users, addUser }) {
     }));
   }
   // JSON.stringify(userData)
-  async function createUser(userData) {
+  async function createUser(rolesName) {
     try {
       console.log(userData);
-      const response = await fetch('https://paymenttracking-backend.onrender.com/api/v1/roles/create', {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json' 
-        },
-        body: ['4:05,','roles2']
-      });
+
+
+      const data = {
+        rolesName,
+      }; // This should be an array or an object, depending on what your API expects.
+
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/roles/create",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
       console.log(response);
-  
+
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
-  
+
       const createdUser = await response.json(); // Parse the JSON response
-  
-      console.log('User created successfully:', createdUser); // Log the created user
-  
+
+      console.log("User created successfully:", createdUser); // Log the created user
+
       return createdUser; // Optionally return the created user data for further processing
-  
     } catch (error) {
-      console.error('Error creating user:', error); // Handle errors gracefully
+      console.error("Error creating user:", error); // Handle errors gracefully
     }
   }
   
   // Example usage:
   
-  const userData = ['roles1,','roles2'];
+  const rolesName = ["roles1", "roles2"];
+  const userData=[];
   
   
 
@@ -67,8 +77,7 @@ export function User({ users, addUser }) {
     event.preventDefault();
     // addUser(newUser);
     console.log(userData);
-    createUser(userData )
-    .then(createdUser => {
+    createUser(rolesName).then((createdUser) => {
       console.log("test Done");
     });
     setNewUser({
