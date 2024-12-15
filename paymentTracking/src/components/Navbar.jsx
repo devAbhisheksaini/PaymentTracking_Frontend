@@ -22,6 +22,9 @@ export function Navbar() {
                     <li class = "hover:underline transition-all duration-200">
                         <NavLink to="/organization" className="">Organization</NavLink>
                     </li>
+                    <li class = "hover:underline transition-all duration-200">
+                        <NavLink to="/roles" className="">Organization Roles</NavLink>
+                    </li>
                 </span>
 
                 <li class="hover:underline transition-all duration-200 m-[1px]">

@@ -5,7 +5,12 @@ import {Navbar} from './components/Navbar'
 import User from './components/User/User'
 import Organization from './components/Organization/Organization'
 import Dailyreport from './components/Daily_Report/Dailyreport'
+import Roles from './components/OrgRoles/Roles'
 import NotFound from './components/NotFound'
+import { createContext } from 'react';
+import LeftMenu from './components/LeftMenu';
+
+export const ThemeContext = createContext(null);
 
 export function App() {
   const {weekDaysData} = {
@@ -38,19 +43,32 @@ export function App() {
       ]
     }
     
+    const [theme, setTheme] = useState("light");
+    const toggleTheme = () => {
+      setTheme ( (curr) => (curr ==="light" ? "dark": "light"))
+
+    } 
 
   return (
     <>
-      {/* <Navbar/> */}
-      <Routes>
-        <Route path = "/" element = {<Navbar/>}>
-          {/* <Route index element = {<Dashboard/>} /> */}
-          <Route index element = {<Dailyreport weekDaysData={weekDaysData}/>} />
-          <Route path= "/user" element = {<User users={users} />} />
-          <Route path= "/organization" element = {<Organization/>} />
-          <Route path="*" element = {<NotFound/>} />
-        </Route>
-      </Routes>
+      {/* <ThemeContext.Provider value= {{theme, toggleTheme}}> */}
+        {/* <div className= "App" id={theme}> */}
+        <LeftMenu />
+          <Routes>
+            <Route path = "/" element = {<Navbar/>}>
+              {/* <Route index element = {<Dashboard/>} /> */}
+              <Route index element = {<Dailyreport weekDaysData={weekDaysData}/>} />
+              <Route path= "/user" element = {<User users={users} />} />
+              <Route path= "/organization" element = {<Organization/>} />
+              <Route path= "/roles" element = {<Roles/>} />
+              <Route path="*" element = {<NotFound/>} />
+            </Route>
+          </Routes>
+        {/* </div> */}
+
+      {/* </ThemeContext.Provider> */}
+
+      
     </>
   )
 }

@@ -36,11 +36,11 @@ export function User({ users, addUser }) {
 
 
       const data = {
-        rolesName,
+        rolesName: ["test11:16"],
       }; // This should be an array or an object, depending on what your API expects.
 
       const response = await axios.post(
-        "http://localhost:3000/api/v1/roles/create",
+        "https://paymenttracking-backend.onrender.com/api/v1/roles/create",
         data,
         {
           headers: {
@@ -48,9 +48,10 @@ export function User({ users, addUser }) {
           },
         }
       );
+      
 
-      console.log(response.data);
-      console.log(response);
+      console.log(response.status);
+      console.log(response.headers['tracking-id']+ "     tracking");
 
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
@@ -70,6 +71,18 @@ export function User({ users, addUser }) {
   
   const rolesName = ["roles1", "roles2"];
   const userData=[];
+
+  async function getUserData() {
+    // try {
+      const response = await axios.get("https://paymenttracking-backend.onrender.com/api/v1/roles/getRoles",{
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      console.log(response);
+    // } 
+  };
   
   
 
@@ -122,6 +135,8 @@ export function User({ users, addUser }) {
           </tbody>
         </table>
       </div>
+
+      <button onClick={getUserData}> Get Users</button>
       <div className="p-4 bg-gray-100 rounded-lg my-4">
         {!openForm ? (
           <span className="bg-gray-500 p-2 rounded-full text-white">
@@ -131,6 +146,8 @@ export function User({ users, addUser }) {
           <div className="p-4 min-w-full table-auto border-collapse">
             <form onSubmit={handleSubmit}>
             <button onClick={handleSubmit}> test api</button>
+
+            
               <div className="mb-4">
                 <label className="block text-gray-700" htmlFor="name">
                   Name
