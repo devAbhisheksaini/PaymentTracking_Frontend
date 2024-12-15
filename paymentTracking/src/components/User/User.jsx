@@ -1,8 +1,11 @@
 import { useState } from 'preact/hooks';
 import React from 'react';
-import axios from "axios";
-export function User({ users, addUser }) {
+
+export function User({ users }) {
   const [openForm, setForm] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editingUserIndex, setEditingUserIndex] = useState(null);
+
   const [newUser, setNewUser] = useState({
     name: '',
     isActive: true,
@@ -11,8 +14,25 @@ export function User({ users, addUser }) {
     address: '',
   });
 
+  const tableHeading = ['Name', 'Status', 'Email', 'Phone', 'Address', 'Actions'];
+
   function showAddUserForm() {
+    setEditMode(false);
     setForm(true);
+    setNewUser({
+      name: '',
+      isActive: true,
+      email: '',
+      phone_no: '',
+      address: '',
+    });
+  }
+
+  function handleEdit(index) {
+    setEditMode(true);
+    setForm(true);
+    setEditingUserIndex(index);
+    setNewUser(users[index]);
   }
 
   function handleChange(event) {
@@ -23,76 +43,25 @@ export function User({ users, addUser }) {
     }));
   }
 
-  function handleStatusChange(event) {
+  function handleToggle() {
     setNewUser((prev) => ({
       ...prev,
-      isActive: event.target.value === 'active',
+      isActive: !prev.isActive,
     }));
   }
-  // JSON.stringify(userData)
-  async function createUser(rolesName) {
-    try {
-      console.log(userData);
-
-
-      const data = {
-        rolesName: ["test11:16"],
-      }; // This should be an array or an object, depending on what your API expects.
-
-      const response = await axios.post(
-        "https://paymenttracking-backend.onrender.com/api/v1/roles/create",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      
-
-      console.log(response.status);
-      console.log(response.headers['tracking-id']+ "     tracking");
-
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
-      }
-
-      const createdUser = await response.json(); // Parse the JSON response
-
-      console.log("User created successfully:", createdUser); // Log the created user
-
-      return createdUser; // Optionally return the created user data for further processing
-    } catch (error) {
-      console.error("Error creating user:", error); // Handle errors gracefully
-    }
-  }
-  
-  // Example usage:
-  
-  const rolesName = ["roles1", "roles2"];
-  const userData=[];
-
-  async function getUserData() {
-    // try {
-      const response = await axios.get("https://paymenttracking-backend.onrender.com/api/v1/roles/getRoles",{
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    
-      console.log(response);
-    // } 
-  };
-  
-  
 
   function handleSubmit(event) {
     event.preventDefault();
-    // addUser(newUser);
-    console.log(userData);
-    createUser(rolesName).then((createdUser) => {
-      console.log("test Done");
-    });
+
+    if (editMode) {
+      // Save edited user
+      users[editingUserIndex] = newUser;
+    } else {
+      // Add new user
+      users.push(newUser);
+    }
+
+    // Clear the form
     setNewUser({
       name: '',
       isActive: true,
@@ -101,132 +70,156 @@ export function User({ users, addUser }) {
       address: '',
     });
     setForm(false);
+    setEditMode(false);
+    setEditingUserIndex(null);
   }
 
   return (
-    <div className='m-6'>
-    <p className=''> Users </p>
-      <div className="overflow-x-auto rounded-lg bg-gray-100">
-        
-        <table className="min-w-full table-auto border-collapse">
-          <thead className="border-b">
-            <tr>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Phone</th>
-              <th className="px-4 py-2">Created</th>
-              <th className="px-4 py-2">Updated</th>
-              <th className="px-4 py-2">Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((data, index) => (
-              <tr key={index} className="border-b">
-                <td className="px-4 py-2">{data.name}</td>
-                <td className="px-4 py-2">{data.isActive ? 'Active' : 'Inactive'}</td>
-                <td className="px-4 py-2">{data.email}</td>
-                <td className="px-4 py-2">{data.phone_no}</td>
-                <td className="px-4 py-2">{new Date(data.created).toLocaleString()}</td>
-                <td className="px-4 py-2">{new Date(data.updated).toLocaleString()}</td>
-                <td className="px-4 py-2">{data.address}</td>
+    <div className="border-2 bg-slate-50 rounded-md shadow-md">
+      <div className="px-6 mb-4">
+        <div className="p-4 text-center text-lg font-bold text-indigo-500 mt-2">
+          Existing Users
+        </div>
+        <div className="border-2 overflow-x-auto rounded-lg bg-slate-200 shadow-sm">
+          <table className="w-full text-sm text-slate-700">
+            <thead className="border-b bg-slate-100 text-left">
+              <tr>
+                {tableHeading.map((heading, index) => (
+                  <th key={index} className="px-4 py-2 font-semibold">
+                    {heading}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {users.map((data, index) => (
+                <tr key={index} className="border-b hover:bg-slate-50">
+                  <td className="px-4 py-2">{data.name}</td>
+                  <td className="px-4 py-2">
+                    {data.isActive ? (
+                      <span className="text-green-600 font-medium">Active</span>
+                    ) : (
+                      <span className="text-red-600 font-medium">Inactive</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-2">{data.email}</td>
+                  <td className="px-4 py-2">{data.phone_no}</td>
+                  <td className="px-4 py-2">{data.address}</td>
+                  <td className="px-4 py-2">
+                    <button
+                      className="text-blue-500 hover:text-blue-700"
+                      onClick={() => handleEdit(index)}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      <button onClick={getUserData}> Get Users</button>
-      <div className="p-4 bg-gray-100 rounded-lg my-4">
-        {!openForm ? (
-          <span className="bg-gray-500 p-2 rounded-full text-white">
-            <button onClick={showAddUserForm}>Add User</button>
-          </span>
-        ) : (
-          <div className="p-4 min-w-full table-auto border-collapse">
-            <form onSubmit={handleSubmit}>
-            <button onClick={handleSubmit}> test api</button>
-
-            
-              <div className="mb-4">
-                <label className="block text-gray-700" htmlFor="name">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={newUser.name}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                  required
-                />
+        <div className="my-6">
+          {!openForm ? (
+            <button
+              className="bg-indigo-500 px-4 py-2 rounded-full text-white font-medium shadow hover:bg-indigo-600"
+              onClick={showAddUserForm}
+            >
+              Add User
+            </button>
+          ) : (
+            <div className="border-2 overflow-x-auto rounded-lg bg-slate-100 shadow-sm">
+              <div className="p-2 text-center font-bold text-indigo-500 mt-2">
+                {editMode ? 'Edit User' : 'Add User'}
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700" htmlFor="status">
-                  Status
-                </label>
-                <select
-                  id="status"
-                  name="status"
-                  value={newUser.isActive ? 'active' : 'inactive'}
-                  onChange={handleStatusChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
+              <div className="p-4">
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label className="block text-slate-700 font-medium" htmlFor="name">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={newUser.name}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-slate-700 font-medium mb-2">Status</label>
+                    <div className="flex items-center space-x-2">
+                      <div
+                        onClick={handleToggle}
+                        className={`relative inline-block w-10 h-5 cursor-pointer rounded-full transition ${
+                          newUser.isActive ? 'bg-blue-500' : 'bg-gray-300'
+                        }`}
+                      >
+                        <span
+                          className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition transform ${
+                            newUser.isActive ? 'translate-x-5' : ''
+                          }`}
+                        />
+                      </div>
+                      <span className="text-sm text-slate-600">
+                        {newUser.isActive ? 'Active' : 'Inactive'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-slate-700 font-medium" htmlFor="email">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={newUser.email}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-slate-700 font-medium" htmlFor="phone">
+                      Phone
+                    </label>
+                    <input
+                      type="text"
+                      id="phone"
+                      name="phone_no"
+                      value={newUser.phone_no}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-slate-700 font-medium" htmlFor="address">
+                      Address
+                    </label>
+                    <textarea
+                      id="address"
+                      name="address"
+                      value={newUser.address}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <button
+                      type="submit"
+                      className="bg-indigo-500 px-4 py-2 rounded-full text-white font-medium shadow hover:bg-indigo-600"
+                    >
+                      {editMode ? 'Save Changes' : 'Save User'}
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={newUser.email}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700" htmlFor="phone">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  id="phone"
-                  name="phone_no"
-                  value={newUser.phone_no}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="b  " htmlFor="address">
-                  Address
-                </label>
-                <textarea
-                  id="address"
-                  name="address"
-                  value={newUser.address}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
-                >
-                  Add User
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

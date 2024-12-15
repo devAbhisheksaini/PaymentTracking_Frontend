@@ -8,7 +8,6 @@ import Dailyreport from './components/Daily_Report/Dailyreport'
 import Roles from './components/OrgRoles/Roles'
 import NotFound from './components/NotFound'
 import { createContext } from 'react';
-import LeftMenu from './components/LeftMenu';
 
 export const ThemeContext = createContext(null);
 
@@ -25,6 +24,16 @@ export function App() {
           "amount": 3200.50,
           "orderId": "ORD67890"
         },
+        {
+          "organizationName": "Innovative Labs Inc.",
+          "amount": 3200.50,
+          "orderId": "ORD67890"
+        },
+        {
+          "organizationName": "Innovative Labs Inc.",
+          "amount": 3200.50,
+          "orderId": "ORD67890"
+        },
       ]
     };
 
@@ -32,6 +41,66 @@ export function App() {
       "users": [
         {
           "id": 1,
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phone_no": "89849845165",
+          "isActive": false,
+          "created": "2023-01-15T10:00:00Z",
+          "updated": "2023-06-20T14:30:00Z",
+          "address": "123 Main Street, Springfield, IL, 62704"
+        },
+        {
+          "id": 2,
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phone_no": "89849845165",
+          "isActive": true,
+          "created": "2023-01-15T10:00:00Z",
+          "updated": "2023-06-20T14:30:00Z",
+          "address": "123 Main Street, Springfield, IL, 62704"
+        },
+        {
+          "id": 3,
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phone_no": "89849845165",
+          "isActive": true,
+          "created": "2023-01-15T10:00:00Z",
+          "updated": "2023-06-20T14:30:00Z",
+          "address": "123 Main Street, Springfield, IL, 62704"
+        },
+        {
+          "id": 4,
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phone_no": "89849845165",
+          "isActive": true,
+          "created": "2023-01-15T10:00:00Z",
+          "updated": "2023-06-20T14:30:00Z",
+          "address": "123 Main Street, Springfield, IL, 62704"
+        },
+        {
+          "id": 5,
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phone_no": "89849845165",
+          "isActive": true,
+          "created": "2023-01-15T10:00:00Z",
+          "updated": "2023-06-20T14:30:00Z",
+          "address": "123 Main Street, Springfield, IL, 62704"
+        },
+        {
+          "id": 6,
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phone_no": "89849845165",
+          "isActive": true,
+          "created": "2023-01-15T10:00:00Z",
+          "updated": "2023-06-20T14:30:00Z",
+          "address": "123 Main Street, Springfield, IL, 62704"
+        },
+        {
+          "id": 7,
           "name": "John Doe",
           "email": "johndoe@example.com",
           "phone_no": "89849845165",
@@ -51,24 +120,17 @@ export function App() {
 
   return (
     <>
-      {/* <ThemeContext.Provider value= {{theme, toggleTheme}}> */}
-        {/* <div className= "App" id={theme}> */}
-        <LeftMenu />
-          <Routes>
-            <Route path = "/" element = {<Navbar/>}>
-              {/* <Route index element = {<Dashboard/>} /> */}
-              <Route index element = {<Dailyreport weekDaysData={weekDaysData}/>} />
-              <Route path= "/user" element = {<User users={users} />} />
-              <Route path= "/organization" element = {<Organization/>} />
-              <Route path= "/roles" element = {<Roles/>} />
-              <Route path="*" element = {<NotFound/>} />
-            </Route>
-          </Routes>
-        {/* </div> */}
-
-      {/* </ThemeContext.Provider> */}
-
-      
+      <div>
+        <Routes>
+          <Route path = "/" element = {<Navbar/>}>
+            <Route index element = {<Dailyreport weekDaysData={weekDaysData}/>} />
+            <Route path= "/user" element = {<User users={users} />} />
+            <Route path= "/organization" element = {<Organization/>} />
+            <Route path= "/roles" element = {<Roles/>} />
+            <Route path="*" element = {<NotFound/>} />
+          </Route>
+        </Routes>
+      </div>
     </>
   )
 }
