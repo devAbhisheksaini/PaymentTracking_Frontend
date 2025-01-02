@@ -9,6 +9,7 @@ import NotFound from "./components/NotFound";
 import Login from "./pages/Login";
 import ProtectedRoute from "./features/ProtectedRoute"
 import { AuthProvider } from "./context/AuthContext";
+import Profile from "./pages/Profile";
 
 export function App() {
   const { weekDaysData } = {
@@ -127,7 +128,7 @@ export function App() {
           <Route
             path="/organization"
             element={
-              <ProtectedRoute requiredRole="admin">
+              <ProtectedRoute requiredRole="test">
                 <Organization />
               </ProtectedRoute>
             }
@@ -140,6 +141,7 @@ export function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/not-authorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
         </Route>

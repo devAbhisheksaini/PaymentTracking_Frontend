@@ -58,13 +58,12 @@ const Roles = () => {
     setTempRole("");
   };
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  // useEffect(() => {
+  //   getUserData();
+  // }, []);
 
   return (
     <>
-      <button onClick={() => setCreatebtn(true)}> Add Roles</button>
       {createbtn && (
         <div className="border-2 bg-slate-50 rounded-md shadow-md mb-4">
           <div className="my-3 ml-1 text-md font-bold ">Roles</div>
@@ -84,10 +83,24 @@ const Roles = () => {
         </div>
       )}
 
-      <div className="border-2 bg-slate-50 rounded-md shadow-md">
-        <div className="px-6 py-4">
-          <div className="my-3 ml-1 text-md font-bold">Roles</div>
+      <div className="border-2 bg-slate-50 rounded-md shadow-md pb-4">
+      
+        <div className="px-6 py-2 space-y-4">
+          <div className="flex justify-between my-3">
+            <div className="ml-1 text-md font-bold m-auto">
+            Roles
+            </div>
+            {!createbtn && (
+              <button
+                className="bg-indigo-500 px-4 mr-1 py-1 rounded-full text-white font-medium shadow hover:bg-indigo-600"
+                onClick={setCreatebtn}
+              >
+                Add Roles
+              </button>
+            )}
 
+          </div>
+          
           {error ? (
             <p style={{ color: "red" }}>{error}</p>
           ) : roles.length === 0 ? (
@@ -95,20 +108,28 @@ const Roles = () => {
           ) : (
             <div className="flex flex-wrap bg-gray-200 rounded-lg px-2 py-1">
               {roles.map((role, index) => (
-                <>
                   <p
                     key={index}
                     className={
-                      `bg-indigo-500 px-2 py-1 rounded-lg text-white font-medium m-1 ` +
+                      `bg-green-700 px-2 py-1 rounded-lg text-white font-medium m-1 ` +
                       (!role.isActive && "bg-red-400")
                     }
                   >
                     {role.name || `Role ${index + 1}`}
                   </p>
-                </>
+                  
               ))}
             </div>
           )}
+
+          <div className="flex justify-between px-2">
+            <button
+              className="bg-indigo-500 px-4 py-1 rounded-full text-white font-medium shadow hover:bg-indigo-600"
+              onClick = {getUserData}
+            >
+            Refresh Roles
+            </button>
+          </div>
         </div>
       </div>
     </>

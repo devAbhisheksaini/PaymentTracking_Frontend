@@ -4,11 +4,12 @@ import {Accordion, AccordionActions, AccordionSummary, AccordionDetails, Button}
 
 import ExpandMoreIcon from '@mui/icons-material/ArrowDropDown';
 
-
-
 export default function AccordionUsage() {
   return (
     <div>
+      <p className='text-red-500 text-2xl'> 
+      Page on maintain
+      </p>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon/>}
