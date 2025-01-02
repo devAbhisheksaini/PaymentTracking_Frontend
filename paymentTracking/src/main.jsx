@@ -1,12 +1,14 @@
-import { render } from 'preact'
-import './index.css'
-import { App } from './app.jsx'
-import { BrowserRouter} from 'react-router-dom';  
+import React from 'react';
+import ReactDOM from 'react-dom/client'; // Correct import for React 18
+import './styles/index.css';
+import { App } from './app.jsx';
+import { BrowserRouter } from 'react-router-dom';
 
-
-render(
+const root = ReactDOM.createRoot(document.getElementById('app')); // Create the root
+root.render(
+  <React.StrictMode>
     <BrowserRouter>
-        <App />
+      <App />
     </BrowserRouter>
-    , 
-    document.getElementById('app'))
+  </React.StrictMode>
+);

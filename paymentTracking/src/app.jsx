@@ -1,15 +1,14 @@
-import { useState } from 'preact/hooks'
-import './app.css'
 import {Routes, Route } from 'react-router-dom';
-import {Navbar} from './components/Navbar'
-import User from './components/User/User'
-import Organization from './components/Organization/Organization'
-import Dailyreport from './components/Daily_Report/Dailyreport'
-import Roles from './components/OrgRoles/Roles'
+import {Layout} from './components/Layout'
+import User from './pages/User'
+import Organization from './pages/Organization'
+import Dailyreport from './pages/Dailyreport'
+import Roles from './pages/Roles'
 import NotFound from './components/NotFound'
-import { createContext } from 'react';
+import Login from './components/Login';
+// import { createContext } from 'react';
 
-export const ThemeContext = createContext(null);
+// export const ThemeContext = createContext(null);
 
 export function App() {
   const {weekDaysData} = {
@@ -112,17 +111,19 @@ export function App() {
       ]
     }
     
-    const [theme, setTheme] = useState("light");
-    const toggleTheme = () => {
-      setTheme ( (curr) => (curr ==="light" ? "dark": "light"))
+    // const [theme, setTheme] = useState("light");
+    // const toggleTheme = () => {
+    //   setTheme ( (curr) => (curr ==="light" ? "dark": "light"))
 
-    } 
+    // } 
 
   return (
     <>
       <div>
         <Routes>
-          <Route path = "/" element = {<Navbar/>}>
+          <Route path= "/login" 
+            element = {<Login/>} />
+          <Route path = "/" element = {<Layout/>}>
             <Route index element = {<Dailyreport weekDaysData={weekDaysData}/>} />
             <Route path= "/user" element = {<User users={users} />} />
             <Route path= "/organization" element = {<Organization/>} />

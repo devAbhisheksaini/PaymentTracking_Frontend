@@ -4,10 +4,11 @@ export function Dailyreport({ weekDaysData }) {
   return (
     <>
       <div className="border-2 bg-slate-50 rounded-md shadow-md">
-        <div className="p-4 text-center text-lg font-bold text-indigo-500">
-          Daily Report
-        </div>
-        <div className="px-6 pb-4">
+        
+        <div className="px-6 py-4">
+          <div className="my-3 ml-1 text-md font-bold ">
+            Daily Report
+          </div>
           <div className="overflow-x-auto border-2 rounded-lg bg-slate-100 shadow-sm">
             <table className="w-full text-sm text-slate-700">
               <thead className="bg-slate-200 text-left font-semibold">

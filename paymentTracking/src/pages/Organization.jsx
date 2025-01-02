@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+
+import {Accordion, AccordionActions, AccordionSummary, AccordionDetails, Button} from '@mui/material';
+
 import ExpandMoreIcon from '@mui/icons-material/ArrowDropDown';
-import Button from '@mui/material/Button';
-import Text from './Text';
+
+
 
 export default function AccordionUsage() {
   return (
@@ -16,7 +15,6 @@ export default function AccordionUsage() {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <Text/>
         </AccordionSummary>
         <AccordionDetails>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
