@@ -14,7 +14,7 @@ function LeftMenu({ layoutHandler, showMenu }) {
     <>
       <nav className="h-screen fixed top-0 left-0 w-48 bg-indigo-600 px-4 py-6 ">
       { showMenu && (
-          <RiMenuUnfold4Line className='text-3xl cursor-pointer'
+          <RiMenuUnfold4Line className='text-3xl cursor-pointer text-white'
           onClick={layoutHandler} />
       )}
         {/* Menu Items */}

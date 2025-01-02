@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Ubuntu","Roboto", "Open-sans", "Montserrat", "Roboto Condesed", "Oswald","Nunito"],
+        sans: ["Nunito","Ubuntu", "Roboto", "Open Sans", "sans-serif"],
       },
     },
   },

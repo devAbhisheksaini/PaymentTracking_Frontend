@@ -35,8 +35,8 @@ export default function Login() {
 
   return (
     <div>
-      <div className="login bg-blue-600 h-screen flex justify-center items-center">
-        <div className="login-container border-2 bg-slate-300 p-10 rounded-lg">
+      <div className="login bg-indigo-600 h-screen flex justify-center items-center">
+        <div className="login-container bg-slate-300 p-10 rounded-lg">
           <h1 className="text-2xl py-3">Login</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
