@@ -10,17 +10,19 @@ export default function Header({ layoutHandler, showMenu }) {
   const { user } = useAuth();
 
   const headerClasses = clsx(
-    "bg-slate-300 p-4",
-    !showMenu ? "ml-0 flex " : "ml-48"
+    "bg-slate-300 p-4 flex ",
+    showMenu ? "ml-48 transition-all duration-300" : "ml-0 transition-all duration-300"
   );
 
   return (
     <header className={headerClasses}>
       {/* Toggle Menu Button */}
       {!showMenu && (
-        <div className="">
-            <CiMenuKebab className="text-4xl cursor-pointer"
-            onClick={layoutHandler} />
+        <div>
+          <CiMenuKebab
+            className="text-4xl cursor-pointer"
+            onClick={layoutHandler}
+          />
         </div>
       )}
 
@@ -53,3 +55,4 @@ export default function Header({ layoutHandler, showMenu }) {
     </header>
   );
 }
+

@@ -58,9 +58,9 @@ const Roles = () => {
     setTempRole("");
   };
 
-  // useEffect(() => {
-  //   getUserData();
-  // }, []);
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <>
@@ -111,7 +111,7 @@ const Roles = () => {
                   <p
                     key={index}
                     className={
-                      `bg-green-700 px-2 py-1 rounded-lg text-white font-medium m-1 ` +
+                      `bg-green-700 px-2 py-1 rounded-lg text-white m-1 ` +
                       (!role.isActive && "bg-red-400")
                     }
                   >
@@ -124,7 +124,7 @@ const Roles = () => {
 
           <div className="flex justify-between px-2">
             <button
-              className="bg-indigo-500 px-4 py-1 rounded-full text-white font-medium shadow hover:bg-indigo-600"
+              className="bg-indigo-500 px-4 py-1 rounded-full text-white shadow hover:bg-indigo-600"
               onClick = {getUserData}
             >
             Refresh Roles

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // Correct import for React 18
-import './styles/index.css';
+
+import './styles/font.css';
+import './styles/tailwind.css';
 import { App } from './app.jsx';
 import { BrowserRouter } from 'react-router-dom';
 

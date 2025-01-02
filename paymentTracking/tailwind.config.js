@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Ubuntu","Roboto", "Open-sans", "Montserrat", "Roboto Condesed", "Oswald","Nunito"],
+      },
+    },
   },
   plugins: [],
 }
